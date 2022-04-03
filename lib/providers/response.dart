@@ -16,13 +16,12 @@ class Stocks with ChangeNotifier {
   Future<dynamic> getInfo() async {
     stocks.forEach(
       (stock) async {
-        final url = Uri.parse(
+        final url = Uri.parse( 
             'https://finnhub.io/api/v1/quote?symbol=${stock.name}&token=c8v07u2ad3iaocnjog70');
         final response = await http.get(url);
         stock.price = jsonDecode(response.body)['o'];
         //print(stock.name + " " + stock.price.toString(),);
-        notifyListeners();
-        
+        notifyListeners();    
       },
     );
   }

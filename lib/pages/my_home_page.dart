@@ -14,7 +14,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     List<Stock> stocksTest = Provider.of<Stocks>(context).stocks;
-    //Provider.of<Stocks>(context).getInfo();
+    Provider.of<Stocks>(context).getInfo();
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
