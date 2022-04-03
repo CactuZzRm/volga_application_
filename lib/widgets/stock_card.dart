@@ -21,7 +21,7 @@ class StockCard extends StatelessWidget {
           Text(
             stock.name,
             style: const TextStyle(
-              fontSize: 26,
+              fontSize: 16,
             ),
           ),
           Column(
@@ -29,7 +29,7 @@ class StockCard extends StatelessWidget {
               Text(
                 stock.price.toString(),
                 style: const TextStyle(
-                  fontSize: 26,
+                  fontSize: 16,
                 ),
               ),
               // Text(
