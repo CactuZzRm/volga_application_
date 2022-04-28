@@ -1,28 +1,59 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 import '../models/stock.dart';
 
 class Stocks with ChangeNotifier {
   List<Stock> stocks = [
-    Stock(name: "AAPL", price: 0.0),
-    Stock(name: "AMZN", price: 0.0),
-    Stock(name: "BINANCE:BTCUSDT", price: 0.0),
-    Stock(name: "IC MARKETS:1", price: 0.0),
-    Stock(name: "MSFT", price: 0.0),
-    Stock(name: 'BYND', price: 0.0),
+    Stock(name: "AAPL"),
+    Stock(name: "AMZN"),
+    Stock(name: "BINANCE:BTCUSDT"),
+    Stock(name: "IC MARKETS:1"),
+    Stock(name: "MSFT"),
+    Stock(name: 'BYND'),
   ];
 
   Future<dynamic> getInfo() async {
     stocks.forEach(
       (stock) async {
-        final url = Uri.parse( 
+        final url = Uri.parse(
             'https://finnhub.io/api/v1/quote?symbol=${stock.name}&token=c8v07u2ad3iaocnjog70');
-        final response = await http.get(url);
-        stock.price = jsonDecode(response.body)['o'];
-        //print(stock.name + " " + stock.price.toString(),);
-        notifyListeners();    
+        try {
+          final response = await http.get(url);
+          if (response.body != null) {
+            stock.price = jsonDecode(response.body)['o'];
+            print(stock.name + " " + stock.price.toString());
+            notifyListeners();
+          }
+        } catch (err) {
+          print('error');
+        }
       },
     );
+  }
+
+  void listenerFlow(WebSocketChannel channel) {
+    stocks.forEach((stock) {
+      channel.sink.add(jsonEncode({"type": "subscribe", "symbol": stock.name}));
+    });
+  }
+
+  void listener() {
+    final channel = WebSocketChannel.connect(
+      Uri.parse('wss://ws.finnhub.io?token=c8v07u2ad3iaocnjog70'),
+    );
+    
+    listenerFlow(channel);
+
+    channel.stream.listen((event) {
+      //print('Слежу--------------------------------------');
+      final List<dynamic> data = jsonDecode(event)['data'];
+      
+      data.forEach((element) {
+        stocks.firstWhere((stock) => stock.name == element['s']).lastPrice = element['p'];
+        notifyListeners();
+       });
+    });
   }
 }

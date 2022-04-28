@@ -32,13 +32,13 @@ class StockCard extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              // Text(
-              //   percent.toString(),
-              //   style: TextStyle(
-              //     backgroundColor: percent < 0 ? Colors.red : Colors.green,
-              //     fontSize: 20,
-              //   ),
-              // ),
+              Text(
+                stock.lastPrice.toString(),
+                style: TextStyle(
+                  backgroundColor: stock.lastPrice < 0 ? Colors.red : Colors.green,
+                  fontSize: 20,
+                ),
+              ),
             ],
           ),
         ],
