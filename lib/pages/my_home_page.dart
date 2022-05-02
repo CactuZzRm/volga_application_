@@ -11,35 +11,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   @override
+  void initState() {
+    Provider.of<Stocks>(context, listen: false).getInfo().then(
+        (value) => Provider.of<Stocks>(context, listen: false).listener());
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
-    List<Stock> stocksTest = Provider.of<Stocks>(context).stocks;
-    //Provider.of<Stocks>(context, listen: false).getInfo();
+    List<Stock> stocks = Provider.of<Stocks>(context).stocks;
     //Provider.of<Stocks>(context, listen: false).listener();
     return Scaffold(
-      backgroundColor: Colors.grey[400],
+      backgroundColor: const Color.fromARGB(255, 36, 36, 36),
       appBar: AppBar(
         title: const Text('Stocks'),
+        backgroundColor: Color.fromARGB(255, 54, 54, 54),
       ),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () => Provider.of<Stocks>(context, listen: false).listener(),
-            //Provider.of<Stocks>(context, listen: false).getInfo().then((value) => Provider.of<Stocks>(context, listen: false).listner()),
-            child: const Text('Сделать запрос'),
-          ),
           Expanded(
             child: ListView.builder(
-              itemCount: stocksTest.length,
+              itemCount: stocks.length,
               itemBuilder: (context, index) {
                 //print(stocksTest[index].name);
-                return StockCard(stocksTest[index]);
+                return StockCard(stocks[index]);
               },
             ),
           ),
         ],
       ),
-      //ElevatedButton(onPressed: () => Provider.of<Stocks>(context).getInfo(), child: const Text('Сделать запрос'),),
     );
   }
 }

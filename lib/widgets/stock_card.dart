@@ -1,47 +1,96 @@
 import 'package:flutter/material.dart';
 import '../models/stock.dart';
 
-class StockCard extends StatelessWidget {
+class StockCard extends StatefulWidget {
   final Stock stock;
 
-  const StockCard(this.stock);
+  StockCard(this.stock);
+
+  @override
+  State<StockCard> createState() => _StockCardState();
+}
+
+class _StockCardState extends State<StockCard> {
+  bool details = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            stock.name,
-            style: const TextStyle(
-              fontSize: 16,
-            ),
+    var priceDirection = widget.stock.price - widget.stock.lastPrice;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          details = !details;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+          border: Border(
+            bottom:
+                BorderSide(width: 1, color: Color.fromARGB(255, 166, 166, 166)),
           ),
-          Column(
-            children: [
-              Text(
-                stock.price.toString(),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                widget.stock.name,
                 style: const TextStyle(
-                  fontSize: 16,
+                  color: Colors.white,
+                  fontSize: 24,
                 ),
               ),
-              Text(
-                stock.lastPrice.toString(),
-                style: TextStyle(
-                  backgroundColor: stock.lastPrice < 0 ? Colors.red : Colors.green,
-                  fontSize: 20,
+            ),
+            const SizedBox(width: 40, height: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  widget.stock.price.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                widget.stock.lastPrice != 0.0 ? Row(
+                  children: [
+                    Text(
+                      widget.stock.lastPrice
+                          .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
+                      style: TextStyle(
+                        color: priceDirection > 0 ? Colors.green : Colors.red,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 3,
+                      height: 0,
+                    ),
+                    Icon(
+                        priceDirection > 0
+                            ? Icons.arrow_circle_up
+                            : Icons.arrow_circle_down,
+                        color: priceDirection > 0 ? Colors.green : Colors.red),
+                  ],
+                ) : const CircularProgressIndicator(),
+                Visibility(
+                  visible: details == false ? false : true,
+                  child: Text(
+                        priceDirection
+                            .toString(),
+                        style: TextStyle(
+                          color: priceDirection > 0 ? Colors.green : Colors.red,
+                          fontSize: 18,
+                        ),
+                      ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
