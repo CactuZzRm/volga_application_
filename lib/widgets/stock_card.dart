@@ -16,6 +16,14 @@ class _StockCardState extends State<StockCard> {
   @override
   Widget build(BuildContext context) {
     var priceDirection = widget.stock.price - widget.stock.lastPrice;
+    var priceDirPercent = widget.stock.price > widget.stock.lastPrice
+        ? (widget.stock.lastPrice - widget.stock.price) /
+            widget.stock.lastPrice *
+            100 *
+            -1.0
+        : (widget.stock.price - widget.stock.lastPrice) /
+            widget.stock.lastPrice *
+            100;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -55,37 +63,45 @@ class _StockCardState extends State<StockCard> {
                     fontSize: 20,
                   ),
                 ),
-                widget.stock.lastPrice != 0.0 ? Row(
-                  children: [
-                    Text(
-                      widget.stock.lastPrice
-                          .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
-                      style: TextStyle(
-                        color: priceDirection > 0 ? Colors.green : Colors.red,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 3,
-                      height: 0,
-                    ),
-                    Icon(
-                        priceDirection > 0
-                            ? Icons.arrow_circle_up
-                            : Icons.arrow_circle_down,
-                        color: priceDirection > 0 ? Colors.green : Colors.red),
-                  ],
-                ) : const CircularProgressIndicator(),
+                widget.stock.lastPrice != 0.0
+                    ? Row(
+                        children: [
+                          Text(
+                            widget.stock.lastPrice
+                                .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
+                            style: TextStyle(
+                              color: priceDirection > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                            height: 0,
+                          ),
+                          Icon(
+                              priceDirection > 0
+                                  ? Icons.arrow_circle_up
+                                  : Icons.arrow_circle_down,
+                              color: priceDirection > 0
+                                  ? Colors.green
+                                  : Colors.red),
+                        ],
+                      )
+                    : const CircularProgressIndicator(),
                 Visibility(
                   visible: details == false ? false : true,
                   child: Text(
-                        priceDirection
-                            .toString(),
-                        style: TextStyle(
-                          color: priceDirection > 0 ? Colors.green : Colors.red,
-                          fontSize: 18,
-                        ),
-                      ),
+                    priceDirection.toString() +
+                        ' ' +
+                        priceDirPercent.toStringAsFixed(4) +
+                        '%'.toString(),
+                    style: TextStyle(
+                      color: priceDirection > 0 ? Colors.green : Colors.red,
+                      fontSize: 18,
+                    ),
+                  ),
                 )
               ],
             ),
