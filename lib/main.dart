@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:volga_application_/providers/themes.dart';
 import 'pages/my_home_page.dart';
+import 'pages/splash_page.dart';
 import 'providers/response.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +19,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        home: MyHomePage(),
+        //themeMode: ThemeMode.system,
+        //theme: MyThemes.lightTheme,
+        home: SplashScreen(),
+        routes: {
+          'homePage': (context) {return MyHomePage();}
+        },
       ),
     );
   }

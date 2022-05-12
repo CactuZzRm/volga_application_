@@ -16,21 +16,26 @@ class Stocks with ChangeNotifier {
     Stock(name: "EXCOF"),
   ];
 
-  // Future<dynamic> getStocks() async {
-  //   final url = Uri.parse(
-  //       'https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c8v07u2ad3iaocnjog70');
-  //   try {
-  //     final response = await http.get(url);
-  //     if (response.body != null) {
-  //       List<dynamic> data = jsonDecode(response.body);
-  //       print(data);
-  //       notifyListeners();
-  //     }
-  //   } catch (err) {
-  //     print(' - запрос не выполнен!');
-  //   }
-  //   ;
-  // }
+  Future<dynamic> getStocks() async {
+    final url = Uri.parse(
+        'https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c8v07u2ad3iaocnjog70');
+    try {
+      final response = await http.get(url);
+      if (response.body != null) {
+        List<dynamic> data = jsonDecode(response.body);
+        //print(data);
+        data.forEach(
+          (stock) {
+            //print(stock['symbol']);
+            stocks.add(Stock(name: stock['symbol']));
+          },
+        );
+        notifyListeners();
+      }
+    } catch (err) {
+      print(' - запрос не выполнен!');
+    }
+  }
 
   List<Stock> onSearch(String search) {
     return stocks.where((stock) => stock.name.contains(search)).toList();

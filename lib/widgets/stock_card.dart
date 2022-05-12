@@ -43,32 +43,61 @@ class _StockCardState extends State<StockCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Text(
-                widget.stock.name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+            Text(
+              widget.stock.name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
               ),
             ),
             const SizedBox(width: 40, height: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  widget.stock.price.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-                widget.stock.lastPrice != 0.0
-                    ? Row(
-                        children: [
-                          Text(
-                            widget.stock.lastPrice
-                                .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
+            widget.stock.lastPrice != 0.0
+                ? Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          widget.stock.price.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              widget.stock.lastPrice
+                                  .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
+                              style: TextStyle(
+                                color: priceDirection > 0
+                                    ? Colors.green
+                                    : Colors.red,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 3,
+                              height: 0,
+                            ),
+                            Icon(
+                                priceDirection > 0
+                                    ? Icons.arrow_circle_up
+                                    : Icons.arrow_circle_down,
+                                color: priceDirection > 0
+                                    ? Colors.green
+                                    : Colors.red),
+                          ],
+                        ),
+                        Visibility(
+                          visible: details == false ? false : true,
+                          child: Text(
+                            priceDirection.toString() +
+                                ' ' +
+                                priceDirPercent.toStringAsFixed(4) +
+                                '%'.toString(),
                             style: TextStyle(
                               color: priceDirection > 0
                                   ? Colors.green
@@ -76,35 +105,22 @@ class _StockCardState extends State<StockCard> {
                               fontSize: 18,
                             ),
                           ),
-                          const SizedBox(
-                            width: 3,
-                            height: 0,
-                          ),
-                          Icon(
-                              priceDirection > 0
-                                  ? Icons.arrow_circle_up
-                                  : Icons.arrow_circle_down,
-                              color: priceDirection > 0
-                                  ? Colors.green
-                                  : Colors.red),
-                        ],
-                      )
-                    : const CircularProgressIndicator(),
-                Visibility(
-                  visible: details == false ? false : true,
-                  child: Text(
-                    priceDirection.toString() +
-                        ' ' +
-                        priceDirPercent.toStringAsFixed(4) +
-                        '%'.toString(),
-                    style: TextStyle(
-                      color: priceDirection > 0 ? Colors.green : Colors.red,
-                      fontSize: 18,
+                        )
+                      ],
+                    ),
+                  )
+                : const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Padding(
+                      padding: EdgeInsets.all(6.0),
+                      child: CircularProgressIndicator(
+                        backgroundColor: Color.fromARGB(70, 255, 255, 255),
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        strokeWidth: 3,
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
           ],
         ),
       ),
