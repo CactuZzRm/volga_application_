@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:volga_application_/widgets/loading_indicator.dart';
 import '../models/stock.dart';
 
 class StockCard extends StatefulWidget {
@@ -109,18 +110,7 @@ class _StockCardState extends State<StockCard> {
                       ],
                     ),
                   )
-                : const SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Padding(
-                      padding: EdgeInsets.all(6.0),
-                      child: CircularProgressIndicator(
-                        backgroundColor: Color.fromARGB(70, 255, 255, 255),
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        strokeWidth: 3,
-                      ),
-                    ),
-                  ),
+                : LoadingIndicator(boxWidth: 50, boxHeight: 50),
           ],
         ),
       ),

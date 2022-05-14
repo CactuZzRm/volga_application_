@@ -17,7 +17,6 @@ class _MyHomePageState extends State<MyHomePage> {
     Provider.of<Stocks>(context, listen: false)
         .getInfo()
         .then((_) => Provider.of<Stocks>(context, listen: false).listener());
-    //Provider.of<Stocks>(context, listen: false).getStocks();
     super.initState();
   }
 
@@ -51,21 +50,36 @@ class _MyHomePageState extends State<MyHomePage> {
                       }),
                   const Divider(color: Colors.white),
                   ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 107, 107, 107),
+                      )),
                       onPressed: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Мини-справочник'),
+                              title: const Text(
+                                'Мини-справочник',
+                                style: TextStyle(fontSize: 18),
+                              ),
                               content: const Text(
-                                  'Для отображения детальной информации о изменении цены акции нажмите на карточку акции! \n В карточке на верхней позиции отображается актуальная цена, ниже - предыдущая!'),
+                                'Для отображения детальной информации о изменении цены акции нажмите на карточку акции! \n В карточке на верхней позиции отображается актуальная цена, ниже - предыдущая!',
+                                style: TextStyle(fontSize: 16),
+                              ),
                               actions: [
                                 TextButton(
-                                  child: const Text('Закрыть окно'),
+                                  child: const Text(
+                                    'Закрыть окно',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 34, 34, 34),
+                                      fontSize: 16,
+                                    ),
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                )
+                                ),
                               ],
                             );
                           },

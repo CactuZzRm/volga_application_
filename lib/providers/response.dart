@@ -23,10 +23,8 @@ class Stocks with ChangeNotifier {
       final response = await http.get(url);
       if (response.body != null) {
         List<dynamic> data = jsonDecode(response.body);
-        //print(data);
         data.forEach(
           (stock) {
-            //print(stock['symbol']);
             stocks.add(Stock(name: stock['symbol']));
           },
         );
@@ -50,7 +48,6 @@ class Stocks with ChangeNotifier {
           final response = await http.get(url);
           if (response.body != null) {
             stock.price = jsonDecode(response.body)['o'];
-            //print(stock.name + " " + stock.price.toString());
             notifyListeners();
           }
         } catch (err) {
