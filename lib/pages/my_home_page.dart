@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volga_application_/pages/favorites_page.dart';
 
 import '../models/stock.dart';
 import '../providers/response.dart';
@@ -21,9 +22,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget build(BuildContext context) {
-    var isWhite = false;
+    //var isWhite = false;
     List<Stock> stocks = Provider.of<Stocks>(context).stocks;
-    //Provider.of<Stocks>(context, listen: false).listener();
+    List<Stock> favorites = stocks.where((stock) => stock.favorite).toList();
+    //bool showFavorites = false;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 36, 36, 36),
       appBar: AppBar(
@@ -39,15 +42,26 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               ListView(
                 children: [
-                  SwitchListTile(
-                      value: isWhite,
-                      title: Text('Светлая тема?'),
-                      activeColor: Colors.black,
-                      onChanged: (_) {
-                        setState(() {
-                          isWhite = !isWhite;
-                        });
-                      }),
+                  // SwitchListTile(
+                  //     value: isWhite,
+                  //     title: Text('Светлая тема?'),
+                  //     activeColor: Colors.black,
+                  //     onChanged: (_) {
+                  //       setState(() {
+                  //         isWhite = !isWhite;
+                  //       });
+                  //     }),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 107, 107, 107),
+                      )),
+                      onPressed: () {
+                        //showFavorites = !showFavorites;
+                        favorites = stocks.where((stock) => stock.favorite).toList();
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavoriteScreen(favorites)));
+                      },
+                      child: const Text('Показать избранные')),
                   const Divider(color: Colors.white),
                   ElevatedButton(
                       style: ButtonStyle(
@@ -104,7 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ListView.builder(
               itemCount: stocks.length,
               itemBuilder: (context, index) {
-                //print(stocksTest[index].name);
                 return StockCard(stocks[index]);
               },
             ),

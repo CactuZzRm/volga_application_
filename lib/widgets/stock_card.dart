@@ -44,72 +44,96 @@ class _StockCardState extends State<StockCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.stock.name,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
+            !details
+                ? Expanded(
+                  child: Text(
+                      widget.stock.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                )
+                : Expanded(
+                  child: Row(children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.stock.isFavorite();
+                          },);              
+                        },
+                        icon: Icon(Icons.star,
+                            color: !widget.stock.favorite
+                                ? Colors.grey
+                                : Colors.yellow),
+                        iconSize: 16,
+                      ),
+                      Text(
+                        widget.stock.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                        ),
+                      )
+                    ],),
+                ),
             const SizedBox(width: 40, height: 10),
             widget.stock.lastPrice != 0.0
-                ? Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                ? Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      widget.stock.price.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          widget.stock.price.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
+                          widget.stock.lastPrice
+                              .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
+                          style: TextStyle(
+                            color: priceDirection > 0
+                                ? Colors.green
+                                : Colors.red,
+                            fontSize: 18,
                           ),
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              widget.stock.lastPrice
-                                  .toString(), // + ' ' + (priceDirectionPer / stock.lastPrice * 100).toStringAsFixed(2) + '%',
-                              style: TextStyle(
-                                color: priceDirection > 0
-                                    ? Colors.green
-                                    : Colors.red,
-                                fontSize: 18,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 3,
-                              height: 0,
-                            ),
-                            Icon(
-                                priceDirection > 0
-                                    ? Icons.arrow_circle_up
-                                    : Icons.arrow_circle_down,
-                                color: priceDirection > 0
-                                    ? Colors.green
-                                    : Colors.red),
-                          ],
+                        const SizedBox(
+                          width: 3,
+                          height: 0,
                         ),
-                        Visibility(
-                          visible: details == false ? false : true,
-                          child: Text(
-                            priceDirection.toString() +
-                                ' ' +
-                                priceDirPercent.toStringAsFixed(4) +
-                                '%'.toString(),
-                            style: TextStyle(
-                              color: priceDirection > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontSize: 18,
-                            ),
-                          ),
-                        )
+                        Icon(
+                            priceDirection > 0
+                                ? Icons.arrow_circle_up
+                                : Icons.arrow_circle_down,
+                            color: priceDirection > 0
+                                ? Colors.green
+                                : Colors.red),
                       ],
                     ),
-                  )
+                    Visibility(
+                      visible: details == false ? false : true,
+                      child: Text(
+                        priceDirection.toString() +
+                            ' ' +
+                            priceDirPercent.toStringAsFixed(4) +
+                            '%'.toString(),
+                        style: TextStyle(
+                          color: priceDirection > 0
+                              ? Colors.green
+                              : Colors.red,
+                          fontSize: 18,
+                        ),
+                      ),
+                    )
+                  ],
+                )
                 : LoadingIndicator(boxWidth: 50, boxHeight: 50),
           ],
         ),

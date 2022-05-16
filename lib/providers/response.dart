@@ -15,6 +15,7 @@ class Stocks with ChangeNotifier {
     Stock(name: 'BYND'),
     Stock(name: "EXCOF"),
   ];
+  List<Stock> favoritesStocks = [];
 
   Future<dynamic> getStocks() async {
     final url = Uri.parse(
