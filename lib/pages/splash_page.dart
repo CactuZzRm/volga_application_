@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volga_application_/pages/my_home_page.dart';
-import 'package:volga_application_/widgets/loading_indicator.dart';
+import 'package:volga_application_/widgets/stock_card/loading_indicator.dart';
 
 import '../providers/response.dart';
 

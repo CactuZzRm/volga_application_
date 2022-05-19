@@ -4,7 +4,7 @@ import 'package:volga_application_/pages/favorites_page.dart';
 
 import '../models/stock.dart';
 import '../providers/response.dart';
-import '../widgets/stock_card.dart';
+import '../widgets/stock_card/stock_card.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -31,11 +31,11 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: const Color.fromARGB(255, 36, 36, 36),
       appBar: AppBar(
         title: const Text('Stocks'),
-        backgroundColor: Color.fromARGB(255, 54, 54, 54),
+        backgroundColor: const Color.fromARGB(255, 54, 54, 54),
         automaticallyImplyLeading: true,
       ),
       drawer: Drawer(
-        backgroundColor: Color.fromARGB(255, 54, 54, 54),
+        backgroundColor: const Color.fromARGB(255, 54, 54, 54),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Stack(

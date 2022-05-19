@@ -6,6 +6,9 @@ import 'dart:convert';
 import '../models/stock.dart';
 
 class Stocks with ChangeNotifier {
+  var channel = WebSocketChannel.connect(
+      Uri.parse('wss://ws.finnhub.io?token=c8v07u2ad3iaocnjog70'));
+
   List<Stock> stocks = [
     Stock(name: "AAPL"),
     Stock(name: "AMZN"),
@@ -15,7 +18,6 @@ class Stocks with ChangeNotifier {
     Stock(name: 'BYND'),
     Stock(name: "EXCOF"),
   ];
-  List<Stock> favoritesStocks = [];
 
   Future<dynamic> getStocks() async {
     final url = Uri.parse(
@@ -58,18 +60,24 @@ class Stocks with ChangeNotifier {
     );
   }
 
-  void listenerFlow(WebSocketChannel channel) {
+  void openListenerFlow() {
     stocks.forEach((stock) {
       channel.sink.add(jsonEncode({"type": "subscribe", "symbol": stock.name}));
     });
   }
 
+  void closeListenerFlow() {
+    stocks.forEach((stock) {
+      channel.sink.close();
+    });
+  }
+
   void listener() {
-    final channel = WebSocketChannel.connect(
+    channel = WebSocketChannel.connect(
       Uri.parse('wss://ws.finnhub.io?token=c8v07u2ad3iaocnjog70'),
     );
 
-    listenerFlow(channel);
+    openListenerFlow();
 
     channel.stream.listen(
       (event) {
