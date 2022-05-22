@@ -17,6 +17,13 @@ class Stocks with ChangeNotifier {
     Stock(name: "MSFT"),
     Stock(name: 'BYND'),
     Stock(name: "EXCOF"),
+    Stock(name: "GOOGL"),
+    Stock(name: "TSLA"),
+    Stock(name: "NVDA"),
+    Stock(name: "V"),
+    Stock(name: "WMT"),
+    Stock(name: "MA"),
+    Stock(name: "BAC"),
   ];
 
   Future<dynamic> getStocks() async {
@@ -51,6 +58,7 @@ class Stocks with ChangeNotifier {
           final response = await http.get(url);
           if (response.body != null) {
             stock.price = jsonDecode(response.body)['o'];
+            stock.lastPrice = jsonDecode(response.body)['c'];
             notifyListeners();
           }
         } catch (err) {
@@ -60,39 +68,33 @@ class Stocks with ChangeNotifier {
     );
   }
 
-  void openListenerFlow() {
-    stocks.forEach((stock) {
-      channel.sink.add(jsonEncode({"type": "subscribe", "symbol": stock.name}));
-    });
+  void listenStock(String symbol){
+    channel.sink.add(jsonEncode({"type": "subscribe", "symbol": symbol}));
   }
 
-  void closeListenerFlow() {
-    stocks.forEach((stock) {
-      channel.sink.close();
-    });
+  void closeListenStock(String symbol){
+    channel.sink.add(jsonEncode({"type": "unsubscribe", "symbol": symbol}));
   }
 
   void listener() {
     channel = WebSocketChannel.connect(
       Uri.parse('wss://ws.finnhub.io?token=c8v07u2ad3iaocnjog70'),
     );
-
-    openListenerFlow();
-
     channel.stream.listen(
       (event) {
-        if (jsonDecode(event)['data'] != null) {
-          final List<dynamic> data = jsonDecode(event)['data'];
-          data.forEach(
-            (element) {
-              var stock = stocks.firstWhere((el) => el.name == element['s']);
-              stock.lastPrice = stock.price;
-              stock.price = element['p'] * 1.0;
-            },
-          );
-          notifyListeners();
-        } else {
-          print('error');
+        try {
+          if (jsonDecode(event)['data'] != null) {
+            final data = jsonDecode(event)['data'] as List<dynamic>;
+            data.forEach(
+              (element) {
+                var stock = stocks.firstWhere((el) => el.name == element['s']);
+                stock.lastPrice = element['p'] * 1.0;
+              },
+            );
+            notifyListeners();
+          }
+        } catch (err) {
+          print('error: $err');
         }
       },
     );

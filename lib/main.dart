@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:volga_application_/pages/favorites_page.dart';
 import 'pages/my_home_page.dart';
 import 'pages/splash_page.dart';
 import 'providers/response.dart';
@@ -17,15 +18,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Stocks()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         //themeMode: ThemeMode.system,
         //theme: MyThemes.lightTheme,
         home: SplashScreen(),
         routes: {
-          'homePage': (context) {return MyHomePage();}
+          'homePage': (context) {
+            return MyHomePage();
+          },
+          'favoritesPage': (context) {
+            return FavoriteScreen();
+          },
         },
       ),
     );
   }
 }
-

@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../models/stock.dart';
 import '../providers/response.dart';
+import '../variables/colors.dart';
+import '../widgets/general_widgets/drawer.dart';
 import '../widgets/stock_card/stock_card.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  //List<Stock> favorites = [];
-  List<Stock> favorites = [];
-
-  FavoriteScreen(this.favorites);
+  const FavoriteScreen({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
     Provider.of<Stocks>(context).getInfo();
+    List<Stock> favorites = Provider.of<Stocks>(context)
+        .stocks
+        .where((stock) => stock.favorite)
+        .toList();
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 36, 36, 36),
+      backgroundColor: mainColor,
       appBar: AppBar(
-        title: const Text('Favorites!'),
-        backgroundColor: const Color.fromARGB(255, 54, 54, 54),
+        title: Text('Избранные', style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 28))),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: mainColor,
       ),
+      drawer: CustomDrawer('Главная', 'homePage'),
       body: ListView.builder(
         itemCount: favorites.length,
         itemBuilder: (context, index) {

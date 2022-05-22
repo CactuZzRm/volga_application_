@@ -1,72 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/stock.dart';
-
-// class FavoriteDialog extends StatelessWidget {
-//   String text;
-//   Stock stock;
-
-//   FavoriteDialog({
-//     required this.text,
-//     required this.stock,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       title: Text(
-//         '$text в избранное акцию \n${stock.name}?',
-//         style: const TextStyle(fontSize: 18),
-//       ),
-//       actions: [
-//         TextButton(
-//           child: const Text(
-//             'Закрыть окно',
-//             style: TextStyle(
-//               color: Color.fromARGB(255, 34, 34, 34),
-//               fontSize: 16,
-//             ),
-//           ),
-//           onPressed: () {
-//             Navigator.of(context).pop();
-//           },
-//         ),
-//         TextButton(
-//           child: Text(
-//             '$text',
-//             style: const TextStyle(
-//               color: Color.fromARGB(255, 34, 34, 34),
-//               fontSize: 16,
-//             ),
-//           ),
-//           onPressed: () {
-//             stock.isFavorite();
-//             print("${stock.name} ${stock.favorite}");
-
-//             Navigator.of(context).pop();
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
+import '../../variables/colors.dart';
 
 Future<dynamic> favoriteDialog(BuildContext context, String text, Stock stock) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: mainColor,
         title: Text(
-          '$text в избранное акцию \n${stock.name}?',
-          style: const TextStyle(fontSize: 18),
+          '$text в избранное акцию: ${stock.name}?',
+          style: const TextStyle(fontSize: 22, color: Colors.white),
         ),
         actions: [
           TextButton(
             child: const Text(
               'Закрыть окно',
               style: TextStyle(
-                color: Color.fromARGB(255, 34, 34, 34),
-                fontSize: 16,
+                color: Colors.white,
+                fontSize: 18,
               ),
             ),
             onPressed: () {
@@ -76,9 +30,11 @@ Future<dynamic> favoriteDialog(BuildContext context, String text, Stock stock) {
           TextButton(
             child: Text(
               '$text',
-              style: const TextStyle(
-                color: Color.fromARGB(255, 34, 34, 34),
-                fontSize: 16,
+              style: GoogleFonts.roboto(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
               ),
             ),
             onPressed: () {
