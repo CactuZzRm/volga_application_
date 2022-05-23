@@ -34,4 +34,4 @@
 * Разница в цене в процентах
 
 
-* Ссылка на текст курсовой работы: [https://vk.com/away.php?to=https%3A%2F%2Fdocs.google.com%2Fdocument%2Fd%2F1PcHhIn_AZJyH5Kl00H_X-Hqnpe8l_WS6rRZEi6TyFJc%2Fedit%3Fusp%3Dsharing&cc_key=](https://docs.google.com/document/d/1PcHhIn_AZJyH5Kl00H_X-Hqnpe8l_WS6rRZEi6TyFJc/edit?usp=sharing)
+* Ссылка на текст курсовой работы: https://docs.google.com/document/d/1PcHhIn_AZJyH5Kl00H_X-Hqnpe8l_WS6rRZEi6TyFJc/edit
