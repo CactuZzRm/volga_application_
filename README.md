@@ -35,3 +35,4 @@
 
 
 * Ссылка на текст курсовой работы: https://docs.google.com/document/d/1PcHhIn_AZJyH5Kl00H_X-Hqnpe8l_WS6rRZEi6TyFJc/edit
+* Ссылка на презентацию курсовой работы: https://docs.google.com/presentation/d/1cngmMAsTrNwXXf-T1PBlYp-wXjKO1UnzwRH8bfyVU7g/edit#slide=id.g12dc7a992ac_0_140
