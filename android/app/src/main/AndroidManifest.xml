@@ -2,7 +2,7 @@
     package="com.example.volga_application_">
     <uses-permission android:name="android.permission.INTERNET" />
    <application       
-        android:label="volga_application_"
+        android:label="Stocks_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

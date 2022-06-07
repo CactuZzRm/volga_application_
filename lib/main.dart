@@ -20,16 +20,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        //themeMode: ThemeMode.system,
-        //theme: MyThemes.lightTheme,
-        home: SplashScreen(),
+        home: SplashScreen(), //Прописать пустой /
         routes: {
-          'homePage': (context) {
-            return MyHomePage();
-          },
-          'favoritesPage': (context) {
-            return FavoriteScreen();
-          },
+          'homePage': (context) => MyHomePage(), // Имена через /
+          'favoritesPage': (context) => FavoriteScreen(),
         },
       ),
     );

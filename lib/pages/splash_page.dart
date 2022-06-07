@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<Stocks>(context, listen: false)
-        .getInfo()
+        .getStartingPrice()
         .then((_) => Navigator.of(context).pushReplacementNamed('homePage'));
 
     return Material(

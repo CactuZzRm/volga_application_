@@ -23,13 +23,13 @@ class _StockCardState extends State<StockCard> {
   @override
   void initState() {
     provider = Provider.of<Stocks>(context, listen: false);
-    provider.listenStock(widget.stock.name);
+    provider.subscribeStock(widget.stock.name);
     super.initState();
   }
 
   @override
   void dispose() {
-    provider.closeListenStock(widget.stock.name);
+    provider.unsubscribeStock(widget.stock.name);
     super.dispose();
   }
 

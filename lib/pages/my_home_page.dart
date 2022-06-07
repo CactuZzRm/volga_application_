@@ -14,11 +14,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //String routeName = '/MyHomePage';
-
   @override
   void initState() {
-    Provider.of<Stocks>(context, listen: false).listener();
+    Provider.of<Stocks>(context, listen: false).startListenStocks();
     super.initState();
   }
 
