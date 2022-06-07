@@ -17,7 +17,7 @@ Future<dynamic> favoriteDialog(BuildContext context, String text, Stock stock) {
         actions: [
           TextButton(
             child: const Text(
-              'Закрыть окно',
+              'Закрыть окно', 
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
