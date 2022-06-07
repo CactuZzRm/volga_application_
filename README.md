@@ -32,3 +32,7 @@
 **Версия 0,3**
 * Смена цвета в зависимости от направления цены акции
 * Разница в цене в процентах
+
+
+* Ссылка на текст курсовой работы: https://docs.google.com/document/d/1lDSZXFjdiprHoyMM-MlExChafLYUcoY21HlCgrNcMZs/edit
+* Ссылка на презентацию курсовой работы: https://docs.google.com/presentation/d/1cngmMAsTrNwXXf-T1PBlYp-wXjKO1UnzwRH8bfyVU7g/edit#slide=id.g12dc7a992ac_0_140
